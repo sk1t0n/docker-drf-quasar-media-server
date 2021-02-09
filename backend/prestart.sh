@@ -14,4 +14,5 @@
 #    --email $DJANGO_SUPERUSER_EMAIL
 
 # Migrations
+# python manage.py makemigrations
 # python manage.py migrate
