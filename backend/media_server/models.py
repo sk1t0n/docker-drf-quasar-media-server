@@ -1,5 +1,10 @@
-from django.db import models
+from hashlib import shake_256
+from time import time
+
 from django.core.validators import MinValueValidator
+from django.db import models
+from django.db.models.signals import pre_save
+from django.template.defaultfilters import slugify
 
 
 class Video(models.Model):
@@ -18,6 +23,8 @@ class Video(models.Model):
     genres = models.ManyToManyField('Genre', related_name='videos')
 
     class Meta:
+        verbose_name = 'video'
+        verbose_name_plural = 'videos'
         ordering = ['title']
 
     def __str__(self):
@@ -31,7 +38,28 @@ class Genre(models.Model):
     )
 
     class Meta:
+        verbose_name = 'genre'
+        verbose_name_plural = 'genres'
         ordering = ['name']
 
     def __str__(self):
         return self.name
+
+
+def create_unique_slug(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        if isinstance(instance, Video):
+            slug = slugify(instance.title)
+        else:
+            slug = slugify(instance.name)
+    else:
+        slug = instance.slug
+    qs = sender.objects.filter(slug=slug).first()
+    if qs:
+        hash = shake_256(str(time()).encode()).hexdigest(5)
+        slug = f'{slug}-{hash}'
+    instance.slug = slug
+
+
+pre_save.connect(create_unique_slug, sender=Video)
+pre_save.connect(create_unique_slug, sender=Genre)
