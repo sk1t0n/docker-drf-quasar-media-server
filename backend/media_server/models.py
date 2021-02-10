@@ -46,14 +46,24 @@ class Genre(models.Model):
         return self.name
 
 
-def create_unique_slug(sender, instance, *args, **kwargs):
+def set_unique_slug(sender, instance, *args, **kwargs):
+    # update slug:
+    if instance.id:
+        db_obj = sender.objects.filter(pk=instance.id).first()
+        # old and new slugs are equal
+        if db_obj.slug == instance.slug:
+            return
+
+    # create slug
     if not instance.slug:
         if isinstance(instance, Video):
             slug = slugify(instance.title)
         else:
             slug = slugify(instance.name)
+    # # update slug
     else:
         slug = instance.slug
+
     qs = sender.objects.filter(slug=slug).first()
     if qs:
         hash = shake_256(str(time()).encode()).hexdigest(5)
@@ -61,5 +71,5 @@ def create_unique_slug(sender, instance, *args, **kwargs):
     instance.slug = slug
 
 
-pre_save.connect(create_unique_slug, sender=Video)
-pre_save.connect(create_unique_slug, sender=Genre)
+pre_save.connect(set_unique_slug, sender=Video)
+pre_save.connect(set_unique_slug, sender=Genre)
