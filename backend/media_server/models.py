@@ -25,7 +25,7 @@ class Video(models.Model):
     class Meta:
         verbose_name = 'video'
         verbose_name_plural = 'videos'
-        ordering = ['title']
+        ordering = ('-release_date', 'title')
 
     def __str__(self):
         return self.title
@@ -40,7 +40,7 @@ class Genre(models.Model):
     class Meta:
         verbose_name = 'genre'
         verbose_name_plural = 'genres'
-        ordering = ['name']
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
