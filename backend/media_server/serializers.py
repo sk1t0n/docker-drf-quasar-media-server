@@ -41,6 +41,7 @@ class VideoSerializer(serializers.ModelSerializer):
         """
         Handle writable nested serializer to update the current video.
         Genres are replaced but not added.
+        Use the PUT method to fully update the object and the PATCH method to partially update.  # noqa
 
         Args:
             instance (Video): current Video model instance
@@ -51,17 +52,18 @@ class VideoSerializer(serializers.ModelSerializer):
         validated_data.pop('genres')
         instance = super(VideoSerializer, self).update(instance, validated_data)
 
-        genres_data = self.context['request'].data['genres_old']
-        genres = []
-        for genre_data in genres_data:
-            qs = Genre.objects.filter(name=genre_data['name'])
-            if qs.exists():
-                genre = qs.first()
-            else:
-                genre = Genre.objects.create(**genre_data)
-            genres.append(genre)
-            # replace genres
-            instance.genres.set(genres)
-        instance.save()
+        if 'genres_old' in self.context['request'].data:
+            genres_data = self.context['request'].data['genres_old']
+            genres = []
+            for genre_data in genres_data:
+                qs = Genre.objects.filter(name=genre_data['name'])
+                if qs.exists():
+                    genre = qs.first()
+                else:
+                    genre = Genre.objects.create(**genre_data)
+                genres.append(genre)
+                # replace genres
+                instance.genres.set(genres)
 
+        instance.save()
         return instance
