@@ -2,13 +2,27 @@ upstream gunicorn {
     server ${GUNICORN_HOST}:${GUNICORN_PORT};
 }
 
+upstream express {
+    server ${EXPRESS_HOST}:${EXPRESS_PORT};
+}
+
 server {
     listen               80;
     server_name          localhost;
     client_max_body_size 4G;
 
-    # Gunicorn
+    # Express
     location / {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect off;
+        proxy_buffering off;
+        proxy_pass http://express;
+    }
+
+    # Gunicorn
+    location /api {
         proxy_set_header Host $http_host;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
