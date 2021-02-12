@@ -1,1 +1,22 @@
 // app global css in SCSS form
+
+// declare a class which applies it
+@font-face {
+    font-family: "Quattrocento-Bold";
+    src: url(./fonts/Quattrocento-Bold.ttf);
+}
+
+@font-face {
+    font-family: "Quattrocento-Regular";
+    src: url(./fonts/Quattrocento-Regular.ttf);
+}
+
+.quattrocento-font-bold {
+    font-family: "Quattrocento-Bold";
+    font-weight: 700;
+}
+
+.quattrocento-font-regular {
+    font-family: "Quattrocento-Regular";
+    font-weight: 400;
+}

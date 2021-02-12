@@ -22,3 +22,32 @@ $positive  : #21BA45;
 $negative  : #C10015;
 $info      : #31CCEC;
 $warning   : #F2C037;
+
+// color template https://themes.gohugo.io/theme/meghna-hugo/blog
+$background-dark              : #353b43;
+$header-dark                  : #1d2024;
+$drawer-dark                  : #1d2024;
+$footer-dark                  : #292f36;
+$footer-social-hover          : #57cbcc;
+$top-menu-color               : #737f8a;
+$top-menu-hover-color         : #9cabac;
+$card-background              : #292f36;
+$card-text-color              : #737f8a;
+$card-header-hover-text-color : #57cbcc;
+$card-btn-border-color        : #737f8a;
+$card-btn-hover-bg            : #57cbcc;
+$pagination-btn               : #26292e;
+$pagination-btn-hover         : #57cbcc;
+$pagination-btn-active        : #57cbcc;
+$pagination-btn-text-color    : #55606a;
+$video-page-title             : #afbac4;
+$video-page-text              : #737f8a;
+$video-page-bg-genre          : #57cbcc;
+
+// Change breakpoints
+// Max width at which point
+// Current size ends
+$breakpoint-xs: 575px;
+$breakpoint-sm: 767px;
+$breakpoint-md: 991px;
+$breakpoint-lg: 1199px;
