@@ -42,6 +42,11 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://172.35.0.5:8080',  # frontend dev
+    'http://172.35.0.5:3000',  # frontend prod
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,11 +58,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'media_server.apps.MediaServerConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
