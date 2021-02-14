@@ -43,8 +43,9 @@ ALLOWED_HOSTS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://172.35.0.5:8080',  # frontend dev
-    'http://172.35.0.5:3000',  # frontend prod
+    'http://172.35.0.5:8080',  # nginx -> express dev
+    'http://172.35.0.5:3000',  # nginx -> express prod
+    'http://127.0.0.1:8080'    # nginx
 ]
 
 # Application definition

@@ -8,7 +8,7 @@ from .serializers import VideoSerializer, GenreSerializer
 
 
 class VideoPagination(PageNumberPagination):
-    page_size = 5
+    page_size = 6
 
 
 class VideoListCreateView(ListCreateAPIView):
@@ -35,7 +35,7 @@ class VideoRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
 
 class GenrePagination(PageNumberPagination):
-    page_size = 5
+    page_size = 10
 
 
 class GenreListCreateView(ListCreateAPIView):
