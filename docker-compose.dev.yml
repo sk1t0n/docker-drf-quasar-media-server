@@ -51,6 +51,7 @@ services:
     volumes:
       - ./nginx/templates:/etc/nginx/templates
       - ./backend/static:/static
+      - ./media:/media
     networks:
       network:
         ipv4_address: "172.35.0.5"
