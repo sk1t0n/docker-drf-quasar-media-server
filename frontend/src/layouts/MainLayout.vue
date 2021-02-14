@@ -59,10 +59,8 @@
     </q-page-container>
 
     <q-footer class="footer-dark text-center ">
-      <a href="https://github.com">
-        <q-avatar size="64px" class="social-btn">
-          <q-img src="../assets/GitHub-Mark-64px.png" />
-        </q-avatar>
+      <a :href="gitlabUrl">
+        <q-icon size="64px" name="fab fa-gitlab" class="social-btn" />
       </a>
       <q-toolbar>
         <q-toolbar-title class="footer-logo">{{ logoText }}</q-toolbar-title>
@@ -98,7 +96,8 @@ export default {
     return {
       leftDrawerOpen: false,
       topMenu: topMenu,
-      logoText: logoText
+      logoText: logoText,
+      gitlabUrl: 'https://gitlab.com/woolster'
     }
   }
 }
@@ -169,7 +168,7 @@ export default {
 
 .social-btn {
   &:hover {
-    background-color: $footer-social-hover;
+    color: $footer-social-hover;
   }
 }
 
