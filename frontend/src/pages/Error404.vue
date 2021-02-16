@@ -17,6 +17,7 @@
         to="/"
         label="Go Home"
         no-caps
+        @click="linkClick"
       />
     </div>
   </div>
@@ -24,6 +25,18 @@
 
 <script>
 export default {
-  name: 'Error404'
+  name: 'Error404',
+
+  methods: {
+    linkClick (e) {
+      const params = {
+        type: 'video',
+        page: 1,
+        cb: () => {}
+      }
+      this.$store.dispatch('loadItems', params)
+      this.$store.commit('updateCurrentPage', 1)
+    }
+  }
 }
 </script>
