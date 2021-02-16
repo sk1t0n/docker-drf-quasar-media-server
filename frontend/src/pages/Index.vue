@@ -67,20 +67,22 @@
           </q-card>
         </div>
       </div>
+
+      <Pagination class="row" itemType="video" />
     </div>
   </q-page>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-
+import Pagination from '../components/Pagination.vue'
 import filterVideoUrlByExtension from '../helpers'
 
 export default {
   name: 'PageIndex',
 
   components: {
-    //
+    Pagination
   },
 
   filters: {
@@ -108,13 +110,8 @@ export default {
 
   computed: {
     ...mapGetters([
-      'getVideos',
-      'getUrlNextVideos'
+      'getVideos'
     ])
-  },
-
-  beforeMount () {
-    this.$store.dispatch('loadVideos', this.getUrlNextVideos)
   },
 
   methods: {
