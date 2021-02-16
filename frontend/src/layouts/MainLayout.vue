@@ -15,6 +15,7 @@
               v-for="item in topMenu"
               :key="item.title"
               :to="item.url"
+              @click.native="linkClick"
             >
               {{ item.title }}
             </router-link>
@@ -98,6 +99,20 @@ export default {
       topMenu: topMenu,
       logoText: logoText,
       gitlabUrl: 'https://gitlab.com/woolster'
+    }
+  },
+
+  methods: {
+    linkClick (e) {
+      if (e.target.innerText.includes('Home')) {
+        const params = {
+          type: 'video',
+          page: 1,
+          cb: () => {}
+        }
+        this.$store.dispatch('loadItems', params)
+        this.$store.commit('updateCurrentPage', 1)
+      }
     }
   }
 }

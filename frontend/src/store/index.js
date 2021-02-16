@@ -18,64 +18,65 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     state: {
       countVideos: 0,
-      urlNextVideos: 'http://127.0.0.1:8080/api/videos/?page=1',
-      urlPrevVideos: null,
       videos: [],
-      video: {}
+      video: {},
+      countGenres: 0,
+      genres: [],
+      genre: {},
+      currentPage: 1
     },
 
     getters: {
       getCountVideos: state => state.countVideos,
-      getUrlNextVideos: state => state.urlNextVideos,
-      getUrlPrevVideos: state => state.urlPrevVideos,
       getVideos: state => state.videos,
-      getVideo: state => state.video
+      getVideo: state => state.video,
+      getCountGenres: state => state.countGenres,
+      getGenres: state => state.genres,
+      getGenre: state => state.genre
     },
 
     mutations: {
-      updateCountVideos (state, countVideos) {
-        state.countVideos = countVideos
-      },
-      updateUrlNextVideos (state, url) {
-        state.urlNextVideos = url
-      },
-      updateUrlPrevVideos (state, url) {
-        state.urlPrevVideos = url
+      updateCountVideos (state, count) {
+        state.countVideos = count
       },
       updateVideos (state, videos) {
         state.videos = videos
       },
       updateVideo (state, video) {
         state.video = video
+      },
+      updateCountGenres (state, count) {
+        state.countGenres = count
+      },
+      updateGenres (state, genres) {
+        state.genres = genres
+      },
+      updateGenre (state, genre) {
+        state.genre = genre
+      },
+      updateCurrentPage (state, currentPage) {
+        state.currentPage = currentPage
       }
     },
 
     actions: {
-      loadVideos (context, url) {
-        if (!url) return
-        const arr = url.split('?')
-        url = arr[0]
-        let page
-        if (arr.length === 2 && arr[1].startsWith('page')) {
-          page = arr[1].split('=')[1]
-        } else {
-          page = 1
-        }
+      loadItems (context, { type, page, cb }) {
+        type = type.toLowerCase()
+        const url = `http://127.0.0.1:8080/api/${type}s/`
         axios.get(url, { params: { page: page } })
           .then(response => {
             if (response.status === 200) {
-              context.commit('updateCountVideos', response.data.count)
-              context.commit('updateUrlNextVideos', response.data.next)
-              if (!response.data.previous || response.data.previous.includes('?page=')) {
-                context.commit('updateUrlPrevVideos', response.data.previous)
-              } else {
-                context.commit('updateUrlPrevVideos', `${response.data.previous}?page=${page - 1}`)
-              }
-              context.commit('updateVideos', response.data.results)
+              const title = type.charAt(0).toUpperCase() + type.substr(1)
+              context.commit(`updateCount${title}s`, response.data.count)
+              context.commit(`update${title}s`, response.data.results)
             }
+            cb()
           })
           .catch(error => {
-            console.log(error)
+            if (error.response.status === 404) {
+              this.$router.push({ path: '/404' })
+            }
+            cb()
           })
       }
     },
