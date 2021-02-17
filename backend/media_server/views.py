@@ -34,12 +34,7 @@ class VideoRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
             .update(request, *args, **kwargs)
 
 
-class GenrePagination(PageNumberPagination):
-    page_size = 10
-
-
 class GenreListCreateView(ListCreateAPIView):
-    pagination_class = GenrePagination
     serializer_class = GenreSerializer
 
     def get_queryset(self):

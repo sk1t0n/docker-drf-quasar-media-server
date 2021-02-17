@@ -20,7 +20,6 @@ export default function (/* { ssrContext } */) {
       countVideos: 0,
       videos: [],
       video: {},
-      countGenres: 0,
       genres: [],
       genre: {},
       currentPage: 1
@@ -30,7 +29,6 @@ export default function (/* { ssrContext } */) {
       getCountVideos: state => state.countVideos,
       getVideos: state => state.videos,
       getVideo: state => state.video,
-      getCountGenres: state => state.countGenres,
       getGenres: state => state.genres,
       getGenre: state => state.genre
     },
@@ -44,9 +42,6 @@ export default function (/* { ssrContext } */) {
       },
       updateVideo (state, video) {
         state.video = video
-      },
-      updateCountGenres (state, count) {
-        state.countGenres = count
       },
       updateGenres (state, genres) {
         state.genres = genres
@@ -67,7 +62,7 @@ export default function (/* { ssrContext } */) {
           .then(response => {
             if (response.status === 200) {
               const title = type.charAt(0).toUpperCase() + type.substr(1)
-              context.commit(`updateCount${title}s`, response.data.count)
+              if (title === 'Video') context.commit('updateCountVideos', response.data.count)
               context.commit(`update${title}s`, response.data.results)
             }
             cb()
