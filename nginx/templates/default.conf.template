@@ -39,6 +39,9 @@ server {
     location /media {
         autoindex on;
         alias /media;
+        
+        # Disable cache
+        add_header Cache-Control no-cache;
     }
 
     #error_page  404              /404.html;

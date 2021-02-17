@@ -78,6 +78,25 @@ export default function (/* { ssrContext } */) {
             }
             cb()
           })
+      },
+
+      loadItem (context, { type, path, cb }) {
+        type = type.toLowerCase()
+        const url = `http://127.0.0.1:8080/api${path}`
+        axios.get(url)
+          .then(response => {
+            if (response.status === 200) {
+              const title = type.charAt(0).toUpperCase() + type.substr(1)
+              context.commit(`update${title}`, response.data)
+            }
+            cb()
+          })
+          .catch(error => {
+            if (error.response.status === 404) {
+              this.$router.push({ path: '/404' })
+            }
+            cb()
+          })
       }
     },
 

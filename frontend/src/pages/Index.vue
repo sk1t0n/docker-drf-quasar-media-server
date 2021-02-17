@@ -13,15 +13,14 @@
             square
             class="mycard"
           >
-            <video width="100%" controls>
-              <source :src="video.url | videoUrlByExtension('webm')" type="video/webm">
-              <source :src="video.url | videoUrlByExtension('mp4')" type="video/mp4">
+            <video width="100%" controls preload="metadata">
+              <source :src="getVideoUrl(video.url)" :type="getVideoMIMEType(video.url)">
             </video>
 
             <q-card-section class="mycard-title">
               <router-link
                 class="text-white"
-                :to="getVideoPageUrl(video.slug)"
+                :to="{ name: 'videoDetail', params: { slug: video.slug }}"
               >
                 {{ video.title }}
               </router-link>
@@ -53,7 +52,9 @@
             </q-card-section>
 
             <q-card-section>
-              <router-link :to="getVideoPageUrl(video.slug)">
+              <router-link
+                :to="{ name: 'videoDetail', params: { slug: video.slug }}"
+              >
                 <q-btn
                   label="Read more"
                   size="16px"
@@ -76,7 +77,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Pagination from '../components/Pagination.vue'
-import filterVideoUrlByExtension from '../helpers'
+import { getVideoUrl, getVideoMIMETypeFromUrl, filterDateFormat } from '../helpers'
 
 export default {
   name: 'PageIndex',
@@ -86,8 +87,6 @@ export default {
   },
 
   filters: {
-    videoUrlByExtension: filterVideoUrlByExtension,
-
     trim (value) {
       if (value.length > 200) {
         return value.slice(0, 200) + ' ...'
@@ -95,17 +94,7 @@ export default {
       return value
     },
 
-    realeaseDateFormat (value) {
-      const language = window.navigator.language
-      const arr = value.split('-')
-      if (language === 'ru-RU') {
-        return `${arr[2]}.${arr[1]}.${arr[0]}`
-      } else if (language === 'en-US') {
-        return `${arr[1]}/${arr[2]}/${arr[0]}`
-      } else {
-        return `${arr[2]}/${arr[1]}/${arr[0]}`
-      }
-    }
+    realeaseDateFormat: filterDateFormat
   },
 
   computed: {
@@ -115,8 +104,9 @@ export default {
   },
 
   methods: {
-    getVideoPageUrl: slug => `/videos/${slug}`,
-    getGenreUrl: slug => `/genres/${slug}`
+    getGenreUrl: slug => `/genres/${slug}`,
+    getVideoUrl: getVideoUrl,
+    getVideoMIMEType: getVideoMIMETypeFromUrl
   }
 }
 </script>
