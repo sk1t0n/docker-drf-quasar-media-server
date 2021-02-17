@@ -81,6 +81,10 @@ const topMenu = [
     url: '/'
   },
   {
+    title: 'Genres',
+    url: '/genres'
+  },
+  {
     title: 'Add genre',
     url: '/genre/add'
   },

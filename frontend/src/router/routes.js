@@ -10,6 +10,10 @@ const routes = [
         name: 'videoDetail',
         component: () => import('pages/Video.vue'),
         props: true
+      },
+      {
+        path: '/genres',
+        component: () => import('pages/Genres.vue')
       }
     ]
   },

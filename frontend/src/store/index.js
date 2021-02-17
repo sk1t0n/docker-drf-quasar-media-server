@@ -58,12 +58,16 @@ export default function (/* { ssrContext } */) {
       loadItems (context, { type, page, cb }) {
         type = type.toLowerCase()
         const url = `http://127.0.0.1:8080/api/${type}s/`
-        axios.get(url, { params: { page: page } })
+        const params = (page > 1) ? { params: { page: page } } : {}
+        axios.get(url, params)
           .then(response => {
             if (response.status === 200) {
-              const title = type.charAt(0).toUpperCase() + type.substr(1)
-              if (title === 'Video') context.commit('updateCountVideos', response.data.count)
-              context.commit(`update${title}s`, response.data.results)
+              if (type === 'video') {
+                context.commit('updateCountVideos', response.data.count)
+                context.commit('updateVideos', response.data.results)
+              } else {
+                context.commit('updateGenres', response.data)
+              }
             }
             cb()
           })
