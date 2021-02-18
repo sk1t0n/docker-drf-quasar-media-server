@@ -1,14 +1,17 @@
+from django.http import Http404
 from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView
 )
 from rest_framework.pagination import PageNumberPagination
 
 from .models import Video, Genre
 from .serializers import VideoSerializer, GenreSerializer
 
+VIDEOS_PER_PAGE = 6
+
 
 class VideoPagination(PageNumberPagination):
-    page_size = 6
+    page_size = VIDEOS_PER_PAGE
 
 
 class VideoListCreateView(ListCreateAPIView):
@@ -47,3 +50,16 @@ class GenreRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Genre.objects.filter(slug=self.kwargs['slug'])
+
+
+class GenreListVideo(ListAPIView):
+    pagination_class = VideoPagination
+    serializer_class = VideoSerializer
+
+    def get_queryset(self):
+        slug = self.kwargs['slug']
+        genre = Genre.objects.filter(slug=slug).first()
+        if genre:
+            return genre.videos.all()
+        else:
+            raise Http404

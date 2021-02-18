@@ -9,6 +9,11 @@ urlpatterns = [
         views.VideoRetrieveUpdateDestroyView.as_view(),
         name='video_read_update_delete'
     ),
+    path(
+        'genres/<slug:slug>/videos/',
+        views.GenreListVideo.as_view(),
+        name='genre_list_video'
+    ),
     path('genres/', views.GenreListCreateView.as_view(), name='genre_list_create'),
     path(
         'genres/<slug:slug>/',
