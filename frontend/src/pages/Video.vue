@@ -48,9 +48,12 @@ import { getVideoMIMETypeFromUrl, filterDateFormat } from '../helpers'
 export default {
   name: 'Video',
 
-  data: () => ({
-    show: false
-  }),
+  data: function () {
+    return {
+      show: false,
+      slug: this.$route.path.split('/')[2]
+    }
+  },
 
   beforeMount () {
     this.$q.loading.show()
@@ -73,8 +76,7 @@ export default {
     }
 
     const params = {
-      type: 'video',
-      path: this.$route.path,
+      url: `http://127.0.0.1:8080/api/videos/${this.slug}`,
       cb: cb
     }
     this.$store.dispatch('loadItem', params)
@@ -85,7 +87,7 @@ export default {
   },
 
   methods: {
-    getGenreUrl: slug => `genre/${slug}`,
+    getGenreUrl: slug => `genres/${slug}`,
     btnGenreOver (id) {
       this.$refs[id][0].$el.classList.add('animated')
       this.$refs[id][0].$el.classList.add('pulse')
