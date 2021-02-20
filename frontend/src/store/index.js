@@ -55,14 +55,12 @@ export default function (/* { ssrContext } */) {
     },
 
     actions: {
-      loadItems (context, { type, page, cb }) {
-        type = type.toLowerCase()
-        const url = `http://127.0.0.1:8080/api/${type}s/`
+      loadItems (context, { url, page, cb }) {
         const params = (page > 1) ? { params: { page: page } } : {}
         axios.get(url, params)
           .then(response => {
             if (response.status === 200) {
-              if (type === 'video') {
+              if (url.includes('/videos/')) {
                 context.commit('updateCountVideos', response.data.count)
                 context.commit('updateVideos', response.data.results)
               } else {
@@ -79,14 +77,15 @@ export default function (/* { ssrContext } */) {
           })
       },
 
-      loadItem (context, { type, path, cb }) {
-        type = type.toLowerCase()
-        const url = `http://127.0.0.1:8080/api${path}`
+      loadItem (context, { url, cb }) {
         axios.get(url)
           .then(response => {
             if (response.status === 200) {
-              const title = type.charAt(0).toUpperCase() + type.substr(1)
-              context.commit(`update${title}`, response.data)
+              if (url.includes('/videos/')) {
+                context.commit('updateVideo', response.data)
+              } else {
+                context.commit('updateGenre', response.data)
+              }
             }
             cb()
           })
