@@ -14,6 +14,12 @@ const routes = [
       {
         path: '/genres',
         component: () => import('pages/Genres.vue')
+      },
+      {
+        path: '/genres/:slug',
+        name: 'genreDetail',
+        component: () => import('pages/Genre.vue'),
+        props: true
       }
     ]
   },
