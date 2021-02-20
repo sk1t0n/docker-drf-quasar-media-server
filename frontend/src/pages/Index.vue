@@ -69,7 +69,7 @@
         </div>
       </div>
 
-      <Pagination class="row" itemType="video" />
+      <Pagination class="row" />
     </div>
   </q-page>
 </template>
@@ -77,23 +77,17 @@
 <script>
 import { mapGetters } from 'vuex'
 import Pagination from '../components/Pagination.vue'
-import { getVideoUrl, getVideoMIMETypeFromUrl, filterDateFormat } from '../helpers'
+import { getVideoUrl, getVideoMIMETypeFromUrl, filterDateFormat, filterTrim } from '../helpers'
 
 export default {
-  name: 'PageIndex',
+  name: 'IndexPage',
 
   components: {
     Pagination
   },
 
   filters: {
-    trim (value) {
-      if (value.length > 200) {
-        return value.slice(0, 200) + ' ...'
-      }
-      return value
-    },
-
+    trim: filterTrim,
     realeaseDateFormat: filterDateFormat
   },
 
@@ -112,45 +106,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mycard {
-  background-color: $card-background;
-  color: $card-text-color;
-
-  a:hover {
-    color: $card-header-hover-text-color !important;
-    cursor: pointer;
-  }
-
-  .mycard-title {
-    font-size: 1.3rem;
-  }
-
-  .mycard-field {
-    margin-top: -25px;
-    margin-bottom: -30px;
-    font-size: 1rem;
-  }
-
-  .hr {
-    border-top: 1px solid $grey-8;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .mycard-summary {
-    font-size: 0.9rem;
-    margin-bottom: -15px;
-  }
-
-  .btn-read-more {
-    border: 1px solid $card-btn-border-color;
-    border-radius: 0px;
-    font-size: 14px !important;
-
-    &:hover {
-      background-color: $card-btn-hover-bg !important;
-      border-color: $card-btn-hover-bg;
-    }
-  }
-}
+@import url('../css/video_list.scss');
 </style>
