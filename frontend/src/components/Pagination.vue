@@ -20,49 +20,53 @@ export default {
   name: 'Pagination',
 
   props: {
-    itemType: {
+    slug: {
       type: String,
-      required: true
+      required: false
     }
   },
 
   data: () => ({
     pages: 1,
     limitVideos: 6,
-    limitGenres: 20,
     show: false
   }),
 
   computed: {
     ...mapGetters([
-      'getCountVideos',
-      'getCountGenres'
+      'getCountVideos'
     ]),
     ...mapState({
       currentPage: state => state.currentPage
-    })
+    }),
+    url () {
+      if (this.slug) {
+        return `http://127.0.0.1:8080/api/genres/${this.slug}/videos/`
+      } else {
+        return 'http://127.0.0.1:8080/api/videos/'
+      }
+    }
   },
 
   beforeMount () {
+    this.show = false
     this.$q.loading.show()
-
     const _this = this
     const cb = () => {
-      if (_this.itemType.toLowerCase() === 'video') {
-        _this.pages = Math.ceil(_this.getCountVideos / _this.limitVideos)
-      } else {
-        _this.pages = Math.ceil(_this.getCountGenres / _this.limitGenres)
-      }
+      _this.pages = Math.ceil(_this.getCountVideos / _this.limitVideos)
       _this.$q.loading.hide()
-      _this.show = true
+      if (this.getCountVideos > 0) _this.show = true
     }
 
-    if (this.$route.fullPath.includes('?page=')) {
+    if (this.$route.query.page) {
       const paramPage = Number(this.$route.query.page)
       this.$store.commit('updateCurrentPage', paramPage)
+    } else {
+      this.$store.commit('updateCurrentPage', 1)
     }
+
     const params = {
-      type: this.itemType,
+      url: this.url,
       page: this.currentPage,
       cb: cb
     }
@@ -73,18 +77,18 @@ export default {
     loadData (currPage) {
       this.$store.commit('updateCurrentPage', currPage)
 
-      if (this.$route.fullPath.includes('?page=') &&
+      if (this.$route.query.page &&
           currPage === Number(this.$route.query.page)) {
         return
       }
 
       const params = {
-        type: this.itemType,
+        url: this.url,
         page: currPage,
         cb: () => {}
       }
       this.$store.dispatch('loadItems', params)
-      this.$router.push({ path: `/?page=${currPage}` })
+      this.$router.push({ path: `${this.$route.path}?page=${currPage}` })
     }
   }
 }
