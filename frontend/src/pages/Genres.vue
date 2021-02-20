@@ -57,7 +57,7 @@ export default {
 
     const _this = this
     const params = {
-      type: 'genre',
+      url: 'http://127.0.0.1:8080/api/genres/',
       page: null,
       cb: () => {
         _this.loading = false
