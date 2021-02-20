@@ -26,4 +26,11 @@ function filterDateFormat (value) {
   }
 }
 
-export { getVideoUrl, getVideoMIMETypeFromUrl, filterDateFormat }
+function filterTrim (value) {
+  if (value.length > 200) {
+    return value.slice(0, 200) + ' ...'
+  }
+  return value
+}
+
+export { getVideoUrl, getVideoMIMETypeFromUrl, filterDateFormat, filterTrim }
