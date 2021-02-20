@@ -110,7 +110,7 @@ export default {
     linkClick (e) {
       if (e.target.innerText.includes('Home')) {
         const params = {
-          type: 'video',
+          url: 'http://127.0.0.1:8080/api/videos/',
           page: 1,
           cb: () => {}
         }
@@ -198,5 +198,9 @@ a {
   &:hover {
     color: $top-menu-hover-color;
   }
+}
+
+main {
+  min-height: calc(100% - 58px - 230px) !important;
 }
 </style>
