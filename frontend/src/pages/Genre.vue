@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="container">
-      <h3 class="flex flex-center q-my-sm">{{ genreName }}</h3>
+      <h3 class="flex flex-center q-my-sm text-blue-grey-4">{{ genreName }}</h3>
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-pa-md"
