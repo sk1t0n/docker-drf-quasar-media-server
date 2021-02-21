@@ -11,14 +11,10 @@
           </q-toolbar-title>
 
           <div class="gt-md top-menu">
-            <router-link
-              v-for="item in topMenu"
-              :key="item.title"
-              :to="item.url"
-              @click.native="linkClick"
-            >
-              {{ item.title }}
-            </router-link>
+            <router-link to="/" @click.native="linkClick">Home</router-link>
+            <router-link to="/genres" @click.native="linkClick">Genres</router-link>
+            <a href="http://127.0.0.1:8080/api/admin/media_server/genre/add/">Add genre</a>
+            <a href="http://127.0.0.1:8080/api/admin/media_server/video/add/">Add video</a>
           </div>
 
           <q-btn
@@ -45,13 +41,7 @@
         >
           Menu
         </q-item-label>
-        <MobileMenu
-          v-for="item in topMenu"
-          :key="item.title"
-          :title="item.title"
-          :url="item.url"
-          class="text-white"
-        />
+        <MobileMenu />
       </q-list>
     </q-drawer>
 
@@ -75,24 +65,6 @@
 import MobileMenu from 'components/MobileMenu.vue'
 
 const logoText = 'Media Server'
-const topMenu = [
-  {
-    title: 'Home',
-    url: '/'
-  },
-  {
-    title: 'Genres',
-    url: '/genres'
-  },
-  {
-    title: 'Add genre',
-    url: '/genre/add'
-  },
-  {
-    title: 'Add video',
-    url: '/video/add'
-  }
-]
 
 export default {
   name: 'MainLayout',
@@ -100,7 +72,6 @@ export default {
   data () {
     return {
       leftDrawerOpen: false,
-      topMenu: topMenu,
       logoText: logoText,
       gitlabUrl: 'https://gitlab.com/woolster'
     }
