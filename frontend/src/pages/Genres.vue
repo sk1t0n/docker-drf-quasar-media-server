@@ -57,7 +57,7 @@ export default {
 
     const _this = this
     const params = {
-      url: 'http://127.0.0.1:8080/api/genres/',
+      url: '/api/genres/',
       page: null,
       cb: () => {
         _this.loading = false
@@ -69,7 +69,7 @@ export default {
   data: function () {
     return {
       pagination: {
-        rowsPerPage: (this.$q.platform.is.mobile) ? 30 : 1000
+        rowsPerPage: (this.$q.platform.is.mobile) ? 15 : 1000
       },
       loading: false,
       filter: '',
@@ -107,6 +107,14 @@ export default {
 
 .q-table__grid-item-value {
   text-align: center;
+}
+
+.q-table__bottom {
+  color: white;
+
+  span, i {
+    color: white;
+  }
 }
 
 .genre-link {

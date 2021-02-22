@@ -35,16 +35,18 @@ export default {
     linkClick (e) {
       if (e.target.textContent === 'Home') {
         const params = {
-          url: 'http://127.0.0.1:8080/api/videos/',
+          url: '/api/videos/',
           page: 1,
           cb: () => {}
         }
         this.$store.dispatch('loadItems', params)
         this.$store.commit('updateCurrentPage', 1)
       } else if (e.target.textContent === 'Add genre') {
-        window.location.href = 'http://127.0.0.1:8080/api/admin/media_server/genre/add/'
+        const url = '/api/admin/media_server/genre/add/'
+        window.location.href = url
       } else if (e.target.textContent === 'Add video') {
-        window.location.href = 'http://127.0.0.1:8080/api/admin/media_server/video/add/'
+        const url = '/api/admin/media_server/video/add/'
+        window.location.href = url
       }
     }
   }

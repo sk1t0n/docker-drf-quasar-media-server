@@ -76,7 +76,7 @@ export default {
     }
 
     const params = {
-      url: `http://127.0.0.1:8080/api/videos/${this.slug}`,
+      url: `/api/videos/${this.slug}`,
       cb: cb
     }
     this.$store.dispatch('loadItem', params)
@@ -149,5 +149,12 @@ a {
 
 p {
   text-align: justify;
+}
+
+@media screen and (max-width: 991px) {
+  #videoTitle {
+    margin-top: 0.5em;
+    font-size: 1.8em;
+  }
 }
 </style>

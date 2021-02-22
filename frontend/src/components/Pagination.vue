@@ -41,9 +41,9 @@ export default {
     }),
     url () {
       if (this.slug) {
-        return `http://127.0.0.1:8080/api/genres/${this.slug}/videos/`
+        return `/api/genres/${this.slug}/videos/`
       } else {
-        return 'http://127.0.0.1:8080/api/videos/'
+        return '/api/videos/'
       }
     }
   },

@@ -37,16 +37,7 @@ SECRET_KEY = 's#-ln*32ply$+u5uknh9u3g0_un-mwzltfa$pw!%rmge_k!i%g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '172.35.0.5',
-    '127.0.0.1'
-]
-
-CORS_ALLOWED_ORIGINS = [
-    'http://172.35.0.5:8080',  # nginx -> express dev
-    'http://172.35.0.5:3000',  # nginx -> express prod
-    'http://127.0.0.1:8080'    # nginx
-]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -59,13 +50,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'media_server.apps.MediaServerConfig',
     'rest_framework',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

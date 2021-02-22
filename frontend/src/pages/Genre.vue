@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="container">
-      <h3 class="flex flex-center q-my-sm text-blue-grey-4">{{ genreName }}</h3>
+      <h3 class="flex flex-center q-my-sm text-blue-grey-4 genrename-header">{{ genreName }}</h3>
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-pa-md"
@@ -106,7 +106,7 @@ export default {
   beforeMount () {
     const _this = this
     const params = {
-      url: `http://127.0.0.1:8080/api/genres/${this.slug}`,
+      url: `/api/genres/${this.slug}`,
       page: null,
       cb: () => {
         _this.genreName = _this.getGenre.name
@@ -138,4 +138,24 @@ export default {
 
 <style lang="scss" scoped>
 @import url('../css/video_list.scss');
+
+@media screen and (max-width: 575px) {
+  .genrename-header {
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .genrename-header {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .genrename-header {
+    margin-bottom: 12px;
+  }
+}
 </style>

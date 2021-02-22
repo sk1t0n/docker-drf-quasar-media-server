@@ -55,7 +55,7 @@ services:
       - EXPRESS_HOST=172.35.0.4
       - EXPRESS_PORT=3000
     ports:
-      - "8080:80"
+      - "${PORT}:80"
     depends_on:
       - backend
       - frontend

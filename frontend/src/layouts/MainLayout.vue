@@ -13,8 +13,8 @@
           <div class="gt-md top-menu">
             <router-link to="/" @click.native="linkClick">Home</router-link>
             <router-link to="/genres" @click.native="linkClick">Genres</router-link>
-            <a href="http://127.0.0.1:8080/api/admin/media_server/genre/add/">Add genre</a>
-            <a href="http://127.0.0.1:8080/api/admin/media_server/video/add/">Add video</a>
+            <a href="/api/admin/media_server/genre/add/">Add genre</a>
+            <a href="/api/admin/media_server/video/add/">Add video</a>
           </div>
 
           <q-btn
@@ -68,20 +68,20 @@ const logoText = 'Media Server'
 
 export default {
   name: 'MainLayout',
+
   components: { MobileMenu },
-  data () {
-    return {
-      leftDrawerOpen: false,
-      logoText: logoText,
-      gitlabUrl: 'https://gitlab.com/woolster'
-    }
-  },
+
+  data: () => ({
+    leftDrawerOpen: false,
+    logoText: logoText,
+    gitlabUrl: 'https://gitlab.com/woolster'
+  }),
 
   methods: {
     linkClick (e) {
       if (e.target.innerText.includes('Home')) {
         const params = {
-          url: 'http://127.0.0.1:8080/api/videos/',
+          url: '/api/videos/',
           page: 1,
           cb: () => {}
         }
