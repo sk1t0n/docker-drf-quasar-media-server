@@ -74,7 +74,7 @@ export default {
   data: () => ({
     leftDrawerOpen: false,
     logoText: logoText,
-    gitlabUrl: 'https://gitlab.com/woolster'
+    gitlabUrl: 'https://gitlab.com/woolster/drf-quasar-media-server'
   }),
 
   methods: {
