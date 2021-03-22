@@ -4,6 +4,8 @@ Web application for playing video on a local network on a computer or mobile dev
 
 A standard HTML5 player is used as a video player. The following formats were tested: mp4, webm.
 
+![screenshot](screenshot.png)
+
 ## Project setup
 
 1. Change environment variables in **.env** and **backend/.env** files
